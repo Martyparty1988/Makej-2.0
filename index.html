@@ -1,9 +1,10 @@
+```html
 <!doctype html>
 <html lang="cs">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Časovač - Elegantní design</title>
+        <title>Pracovní výkazy & Finance</title>
         <link rel="stylesheet" href="style.css" />
         <link
             rel="stylesheet"
@@ -309,18 +310,475 @@
             </section>
 
             <section id="finance">
-                <!-- Finance section content unchanged -->
-                <!-- ... -->
+                <div class="dashboard-cards">
+                    <div class="card finance-summary-card">
+                        <h2 class="card-title">Finanční přehled</h2>
+                        <div class="finance-summary">
+                            <div class="balance-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path id="balance-circle-fill" class="circle"
+                                        stroke-dasharray="0, 100"
+                                        d="M18 2.0845
+                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                </svg>
+                                <div class="balance-amount" id="current-balance">0 Kč</div>
+                                <div class="balance-label">Zůstatek</div>
+                            </div>
+                            <div class="finance-stats">
+                                <div class="stat-item income">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <div class="stat-value" id="total-income">0 Kč</div>
+                                        <div class="stat-label">Příjmy</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item expenses">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <div class="stat-value" id="total-expenses">0 Kč</div>
+                                        <div class="stat-label">Výdaje</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item deductions">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <div class="stat-details">
+                                        <div class="stat-value" id="shared-budget">0 Kč</div>
+                                        <div class="stat-label">Společný rozpočet</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card finance-actions-card">
+                        <h2 class="card-title">Rychlé akce</h2>
+                        <div class="action-buttons">
+                            <button id="add-income-btn" class="action-btn income-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Příjem</span>
+                            </button>
+                            <button id="add-expense-btn" class="action-btn expense-btn">
+                                <i class="fas fa-minus"></i>
+                                <span>Výdaj</span>
+                            </button>
+                            <button id="add-debt-btn" class="action-btn debt-btn">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <span>Dluh</span>
+                            </button>
+                            <button id="add-payment-btn" class="action-btn payment-btn">
+                                <i class="fas fa-money-check-alt"></i>
+                                <span>Splátka</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="finance-entry card">
+                    <h3 class="card-title"><i class="fas fa-file-invoice-dollar"></i> Přidat příjem/výdaj</h3>
+                    <form id="finance-form">
+                        <input type="hidden" id="edit-finance-id" value="" />
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="finance-type">Typ:</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="finance-type" value="income" checked>
+                                        <span class="radio-checkmark"></span>
+                                        <span class="radio-label">Příjem</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="finance-type" value="expense">
+                                        <span class="radio-checkmark"></span>
+                                        <span class="radio-label">Výdaj</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="finance-date">Datum:</label>
+                                <input type="date" id="finance-date" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="finance-description">Popis:</label>
+                                <input type="text" id="finance-description" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="finance-category">Kategorie:</label>
+                                <div class="custom-select">
+                                    <select id="finance-category">
+                                        <option value="">-- Vyberte kategorii --</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="finance-amount">Částka:</label>
+                                <div class="input-with-icon">
+                                    <input type="number" id="finance-amount" min="0" step="0.01" required />
+                                    <i class="fas fa-coins input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="finance-currency">Měna:</label>
+                                <div class="custom-select">
+                                    <select id="finance-currency" required>
+                                        <option value="CZK">CZK</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="save-finance-button" class="btn primary-btn">
+                                <i class="fas fa-plus"></i> Přidat
+                            </button>
+                            <button type="button" id="cancel-finance-edit-button" class="btn cancel-btn" style="display: none">
+                                <i class="fas fa-times"></i> Zrušit úpravu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="finance-logs card">
+                    <h3 class="card-title"><i class="fas fa-exchange-alt"></i> Přehled financí</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Typ</th>
+                                    <th>Popis</th>
+                                    <th>Částka</th>
+                                    <th>Měna</th>
+                                    <th>Datum</th>
+                                    <th>Kategorie</th>
+                                    <th>Akce</th>
+                                </tr>
+                            </thead>
+                            <tbody id="finance-table">
+                                <tr class="empty-row">
+                                    <td colspan="7">Žádné finanční záznamy.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section id="srazky">
-                <!-- Srazky section content unchanged -->
-                <!-- ... -->
+                <div class="dashboard-cards">
+                    <div class="card deductions-overview-card">
+                        <h2 class="card-title">Přehled srážek a dluhů</h2>
+                        <div class="deductions-summary">
+                            <div class="summary-chart">
+                                <canvas id="deductions-chart"></canvas>
+                            </div>
+                            <div class="summary-data">
+                                <div class="summary-item">
+                                    <div class="summary-label">Celkové srážky:</div>
+                                    <div class="summary-value" id="total-deductions">0 Kč</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Aktivní dluhy:</div>
+                                    <div class="summary-value" id="active-debts">0 Kč</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Splaceno dluhů:</div>
+                                    <div class="summary-value" id="paid-debts">0 Kč</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card rent-status-card">
+                        <h2 class="card-title">Stav nájmu</h2>
+                        <div class="rent-details">
+                            <div class="rent-amount">
+                                <div class="rent-label">Měsíční částka:</div>
+                                <div class="rent-value">24 500 Kč</div>
+                            </div>
+                            <div class="rent-due">
+                                <div class="rent-label">Splatnost:</div>
+                                <div class="rent-value">1. den v měsíci</div>
+                            </div>
+                            <div class="rent-status">
+                                <div class="rent-label">Stav:</div>
+                                <div class="rent-value" id="rent-status-value">
+                                    <i class="fas fa-check-circle"></i> Zaplaceno
+                                </div>
+                            </div>
+                            <div class="rent-next">
+                                <div class="rent-label">Další platba:</div>
+                                <div class="rent-value" id="next-rent-date">1.5.2025</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deductions-summary card">
+                    <h3 class="card-title"><i class="fas fa-percentage"></i> Přehled srážek dle měsíce</h3>
+                    <div class="info-box">
+                        <p>
+                            <i class="fas fa-info-circle"></i> Srážky se
+                            automaticky počítají z hrubého výdělku:
+                            <strong>Maru: 1/3 (cca 33.33%)</strong>,
+                            <strong>Marty: 50%</strong>. Zobrazují se srážky za
+                            kompletní měsíce.
+                        </p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Osoba</th>
+                                    <th>Měsíc</th>
+                                    <th>Celkem odpracováno</th>
+                                    <th>Hrubý výdělek</th>
+                                    <th>Srážka</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deductions-summary-table">
+                                <tr class="empty-row">
+                                    <td colspan="5">Žádné záznamy pro výpočet srážek.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="debts-overview card">
+                    <h3 class="card-title"><i class="fas fa-hand-holding-usd"></i> Dluhy a splátky</h3>
+                    <div id="debts-list">
+                        <div class="empty-placeholder">
+                            Žádné dluhy k zobrazení. Přidejte dluh níže.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="debt-entry card">
+                    <h3 class="card-title"><i class="fas fa-file-invoice-dollar"></i> Přidat/Upravit dluh</h3>
+                    <form id="debt-form">
+                        <input type="hidden" id="edit-debt-id" value="" />
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="debt-person">Osoba (dluží):</label>
+                                <div class="custom-select">
+                                    <select id="debt-person" required>
+                                        <option value="maru">Maru</option>
+                                        <option value="marty">Marty</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-description">Popis:</label>
+                                <input type="text" id="debt-description" required placeholder="Např. Půjčka na..." />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="debt-amount">Celková částka:</label>
+                                <div class="input-with-icon">
+                                    <input type="number" id="debt-amount" min="0" step="0.01" required />
+                                    <i class="fas fa-coins input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-currency">Měna:</label>
+                                <div class="custom-select">
+                                    <select id="debt-currency" required>
+                                        <option value="CZK">CZK</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-date">Datum vzniku:</label>
+                                <input type="date" id="debt-date" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-due-date">Datum splatnosti (volitelné):</label>
+                                <input type="date" id="debt-due-date" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="save-debt-button" class="btn primary-btn">
+                                <i class="fas fa-plus"></i> Přidat dluh
+                            </button>
+                            <button type="button" id="cancel-debt-edit-button" class="btn cancel-btn" style="display: none">
+                                <i class="fas fa-times"></i> Zrušit úpravu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="payment-entry card">
+                    <h3 class="card-title"><i class="fas fa-money-check-alt"></i> Přidat splátku</h3>
+                    <form id="payment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-debt-id">Dluh (Komu se splácí):</label>
+                                <div class="custom-select">
+                                    <select id="payment-debt-id" required>
+                                        <option value="">-- Vyberte dluh --</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-amount">Částka splátky:</label>
+                                <div class="input-with-icon">
+                                    <input type="number" id="payment-amount" min="0" step="0.01" required />
+                                    <i class="fas fa-coins input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-date">Datum splátky:</label>
+                                <input type="date" id="payment-date" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-note">Poznámka (volitelné):</label>
+                                <input type="text" id="payment-note" placeholder="Např. Mimořádná splátka" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="save-payment-button" class="btn primary-btn">
+                                <i class="fas fa-money-check-alt"></i> Přidat splátku
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </section>
 
             <section id="prehledy">
-                <!-- Prehledy section content unchanged -->
-                <!-- ... -->
+                <div class="dashboard-cards">
+                    <div class="card stats-overview-card">
+                        <h2 class="card-title">Statistiky</h2>
+                        <div class="stats-overview">
+                            <div class="stats-period-selector">
+                                <button class="period-btn active" data-period="week">Týden</button>
+                                <button class="period-btn" data-period="month">Měsíc</button>
+                                <button class="period-btn" data-period="year">Rok</button>
+                            </div>
+                            <div class="stats-chart-container">
+                                <canvas id="stats-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card tasks-distribution-card">
+                        <h2 class="card-title">Rozdělení úkolů</h2>
+                        <div class="tasks-chart-container">
+                            <canvas id="tasks-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filters-container card">
+                    <h3 class="card-title"><i class="fas fa-filter"></i> Filtry pracovních záznamů</h3>
+                    <form id="filters-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="filter-person">Osoba:</label>
+                                <div class="custom-select">
+                                    <select id="filter-person">
+                                        <option value="">Všichni</option>
+                                        <option value="maru">Maru</option>
+                                        <option value="marty">Marty</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-activity">Úkol:</label>
+                                <div class="custom-select">
+                                    <select id="filter-activity">
+                                        <option value="">Všechny úkoly</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-start-date">Od:</label>
+                                <input type="date" id="filter-start-date" />
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-end-date">Do:</label>
+                                <input type="date" id="filter-end-date" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="apply-filters" class="btn primary-btn">
+                                <i class="fas fa-check"></i> Použít filtry
+                            </button>
+                            <button type="button" id="reset-filters" class="btn cancel-btn">
+                                <i class="fas fa-undo"></i> Zrušit filtry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="work-logs card">
+                    <h3 class="card-title"><i class="fas fa-list-alt"></i> Přehled pracovních záznamů</h3>
+                    <div id="work-logs-accordion" class="accordion-container">
+                        <div class="empty-placeholder">
+                            Žádné záznamy k zobrazení. Zkuste změnit filtry nebo přidejte záznam v sekci Docházka.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-actions card">
+                    <h3 class="card-title"><i class="fas fa-file-export"></i> Export dat</h3>
+                    <div class="export-buttons">
+                        <button id="export-work-logs" class="export-btn">
+                            <i class="fas fa-clock"></i> Export záznamů (CSV)
+                        </button>
+                        <button id="export-finance" class="export-btn">
+                            <i class="fas fa-money-bill-wave"></i> Export financí (CSV)
+                        </button>
+                        <button id="export-deductions" class="export-btn">
+                            <i class="fas fa-percentage"></i> Export srážek (CSV)
+                        </button>
+                        <button id="export-debts" class="export-btn">
+                            <i class="fas fa-hand-holding-usd"></i> Export dluhů (CSV)
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <section id="nastaveni">
@@ -472,3 +930,4 @@
         <script src="app.js"></script>
     </body>
 </html>
+```
