@@ -1,207 +1,859 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>Pracovní výkazy & Finance</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏱️</text></svg>"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Lokální CSS soubory budou načteny jako záloha -->
+        <link rel="stylesheet" href="compact-layout.css" />
+        <link rel="stylesheet" href="responsive-iphone.css" />
+        <!-- Načtení Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Načtení online loaderu -->
+        <script src="online-loader.js"></script>
+    </head>
+    <body>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </label>
+        </div>
 
-Pracovní výkazy & Finance
-	•	Docházka
-	•	Finance
-	•	Srážky
-	•	Přehledy
-	•	Nastavení
-Maru: Wellness
+        <header class="main-header">
+            <div class="header-left">
+                <h1>
+                    <i class="fas fa-briefcase"></i> Pracovní výkazy & Finance
+                </h1>
+                <button id="toggle-menu" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li>
+                        <a
+                            href="#dochazka"
+                            data-section="dochazka"
+                            class="active"
+                            ><i class="fas fa-clock"></i> Docházka</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#finance" data-section="finance"
+                            ><i class="fas fa-coins"></i> Finance</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#srazky" data-section="srazky"
+                            ><i class="fas fa-percentage"></i> Srážky</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#prehledy" data-section="prehledy"
+                            ><i class="fas fa-chart-bar"></i> Přehledy</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#nastaveni" data-section="nastaveni"
+                            ><i class="fas fa-cog"></i> Nastavení</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div id="header-timer" class="header-timer hidden">
+                    <i class="fas fa-stopwatch"></i>
+                    <span id="header-timer-person">Maru</span>:
+                    <span id="header-timer-activity">Wellness</span>
+                </div>
+            </div>
+        </header>
 
-Časovač
+        <div id="notification-container"></div>
 
-Maru
-300 Kč/h
-Maru Marty
-0
-0
-:
-0
-0
-:
-0
-0
-Výdělek:
-0 Kč
-Srážka:
-0 Kč
-Úkol:
-                                        -- Vyberte úkol --
-                                        
-                                    
-Podkategorie:
-Poznámka:
-Start Stop
-Dnešní souhrn
-Celkem hodin:
-0h 0m
-Celkový výdělek:
-0 Kč
-Celkové srážky:
-0 Kč
-Čistý výdělek:
-0 Kč
-Ruční zadání záznamu
-Osoba:
-                                        Maru
-                                        Marty
-                                    
-Datum:
-Začátek:
-Konec:
-Pauza (min):
-Úkol:
-                                        -- Vyberte úkol --
-                                        
-                                    
-Podkategorie:
-Poznámka:
-Přidat záznam
-Nedávné záznamy
-Datum
-Osoba
-Úkol
-Čas
-Trvání
-Výdělek
-Akce
+        <main>
+            <!-- DOCHÁZKA -->
+            <section id="dochazka" class="active">
+                <div class="dashboard-cards">
+                    <div class="timer-card card">
+                        <h3 class="card-title">
+                            <i class="fas fa-stopwatch"></i> Časovač
+                        </h3>
+                        <div class="modern-timer-container">
+                            <div class="person-selector">
+                                <div class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">
+                                    <div id="selected-person">Maru</div>
+                                    <div id="selected-rate">300 Kč/h</div>
+                                </div>
+                                <div class="user-dropdown">
+                                    <button class="dropdown-toggle">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div id="person-dropdown" class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" data-person="maru" data-rate="300">Maru</a>
+                                        <a href="#" class="dropdown-item" data-person="marty" data-rate="400">Marty</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timer-display-container">
+                                <div class="timer-display">
+                                    <div class="timer-digit" id="hours-tens">0</div>
+                                    <div class="timer-digit" id="hours-ones">0</div>
+                                    <div class="timer-separator">:</div>
+                                    <div class="timer-digit" id="minutes-tens">0</div>
+                                    <div class="timer-digit" id="minutes-ones">0</div>
+                                    <div class="timer-separator">:</div>
+                                    <div class="timer-digit" id="seconds-tens">0</div>
+                                    <div class="timer-digit" id="seconds-ones">0</div>
+                                </div>
+                                <div class="earnings-display">
+                                    <div class="earnings-item">
+                                        <div class="earnings-label">Výdělek:</div>
+                                        <div class="earnings-value" id="current-earnings">0 Kč</div>
+                                    </div>
+                                    <div class="earnings-item">
+                                        <div class="earnings-label">Srážka:</div>
+                                        <div class="earnings-value" id="current-deduction">0 Kč</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-selection">
+                                <div class="form-group">
+                                    <label for="task-select">Úkol:</label>
+                                    <select id="task-select" class="form-control">
+                                        <option value="">-- Vyberte úkol --</option>
+                                        <!-- Kategorie budou načteny dynamicky -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="task-subcategory">Podkategorie:</label>
+                                    <input type="text" id="task-subcategory" class="form-control" placeholder="Volitelné">
+                                </div>
+                                <div class="form-group">
+                                    <label for="task-note">Poznámka:</label>
+                                    <input type="text" id="task-note" class="form-control" placeholder="Volitelné">
+                                </div>
+                                <div class="timer-controls">
+                                    <button id="timer-start" class="btn btn-primary">
+                                        <i class="fas fa-play"></i> Start
+                                    </button>
+                                    <button id="timer-stop" class="btn btn-danger" disabled>
+                                        <i class="fas fa-stop"></i> Stop
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-card card">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-line"></i> Dnešní souhrn
+                        </h3>
+                        <div class="summary-content">
+                            <div class="summary-item">
+                                <div class="summary-label">Celkem hodin:</div>
+                                <div class="summary-value" id="total-hours-today">0h 0m</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Celkový výdělek:</div>
+                                <div class="summary-value" id="total-earnings-today">0 Kč</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Celkové srážky:</div>
+                                <div class="summary-value" id="total-deductions-today">0 Kč</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Čistý výdělek:</div>
+                                <div class="summary-value" id="net-earnings-today">0 Kč</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="manual-entry">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-edit"></i> Ruční zadání záznamu
+                        </h3>
+                        <form id="manual-entry-form">
+                            <input type="hidden" id="edit-log-id">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="manual-person">Osoba:</label>
+                                    <select id="manual-person" class="form-control" required>
+                                        <option value="maru">Maru</option>
+                                        <option value="marty">Marty</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="manual-date">Datum:</label>
+                                    <input type="date" id="manual-date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="manual-start-time">Začátek:</label>
+                                    <input type="time" id="manual-start-time" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="manual-end-time">Konec:</label>
+                                    <input type="time" id="manual-end-time" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="manual-break-time">Pauza (min):</label>
+                                    <input type="number" id="manual-break-time" class="form-control" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="manual-activity">Úkol:</label>
+                                    <select id="manual-activity" class="form-control" required>
+                                        <option value="">-- Vyberte úkol --</option>
+                                        <!-- Kategorie budou načteny dynamicky -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="manual-subcategory">Podkategorie:</label>
+                                    <input type="text" id="manual-subcategory" class="form-control" placeholder="Volitelné">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="manual-note">Poznámka:</label>
+                                <input type="text" id="manual-note" class="form-control" placeholder="Volitelné">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" id="save-log-button" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Přidat záznam
+                                </button>
+                                <button type="button" id="cancel-edit-button" class="btn btn-secondary" style="display: none;">
+                                    <i class="fas fa-times"></i> Zrušit úpravy
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="recent-logs">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> Nedávné záznamy
+                        </h3>
+                        <div class="table-container">
+                            <table id="recent-logs-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <th>Osoba</th>
+                                        <th>Úkol</th>
+                                        <th>Čas</th>
+                                        <th>Trvání</th>
+                                        <th>Výdělek</th>
+                                        <th>Akce</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Záznamy budou načteny dynamicky -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-Finanční přehled
-Společný rozpočet:
-0 Kč
-Příjmy tento měsíc:
-0 Kč
-Výdaje tento měsíc:
-0 Kč
+            <!-- FINANCE -->
+            <section id="finance">
+                <div class="dashboard-cards">
+                    <div class="finance-summary-card card">
+                        <h3 class="card-title">
+                            <i class="fas fa-wallet"></i> Finanční přehled
+                        </h3>
+                        <div class="finance-summary">
+                            <div class="finance-stats">
+                                <div class="finance-stat-item">
+                                    <div class="stat-label">Společný rozpočet:</div>
+                                    <div class="stat-value" id="shared-budget-value">0 Kč</div>
+                                </div>
+                                <div class="finance-stat-item">
+                                    <div class="stat-label">Příjmy tento měsíc:</div>
+                                    <div class="stat-value" id="monthly-income">0 Kč</div>
+                                </div>
+                                <div class="finance-stat-item">
+                                    <div class="stat-label">Výdaje tento měsíc:</div>
+                                    <div class="stat-value" id="monthly-expenses">0 Kč</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="finance-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions card">
+                    <h3 class="card-title">
+                        <i class="fas fa-bolt"></i> Rychlé akce
+                    </h3>
+                    <div class="quick-actions-grid">
+                        <div class="quick-action-item income">
+                            <div class="action-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="action-label">Příjem</div>
+                        </div>
+                        <div class="quick-action-item expense">
+                            <div class="action-icon">
+                                <i class="fas fa-minus"></i>
+                            </div>
+                            <div class="action-label">Výdaj</div>
+                        </div>
+                        <div class="quick-action-item debt">
+                            <div class="action-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="action-label">Dluh</div>
+                        </div>
+                        <div class="quick-action-item payment">
+                            <div class="action-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="action-label">Splátka</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="finance-form card">
+                    <h3 class="card-title">
+                        <i class="fas fa-file-invoice"></i> Přidat příjem/výdaj
+                    </h3>
+                    <form id="finance-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Typ:</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="transaction-type" value="income" checked>
+                                        <span class="radio-text">Příjem</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="transaction-type" value="expense">
+                                        <span class="radio-text">Výdaj</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-date">Datum:</label>
+                                <input type="date" id="transaction-date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="transaction-amount">Částka (Kč):</label>
+                                <input type="number" id="transaction-amount" class="form-control" min="1" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-category">Kategorie:</label>
+                                <select id="transaction-category" class="form-control" required>
+                                    <option value="">-- Vyberte kategorii --</option>
+                                    <!-- Kategorie budou načteny dynamicky -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-description">Popis:</label>
+                            <input type="text" id="transaction-description" class="form-control" placeholder="Volitelné">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Uložit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="recent-transactions">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> Nedávné transakce
+                        </h3>
+                        <div class="table-container">
+                            <table id="recent-transactions-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <th>Typ</th>
+                                        <th>Kategorie</th>
+                                        <th>Popis</th>
+                                        <th>Částka</th>
+                                        <th>Akce</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Transakce budou načteny dynamicky -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SRÁŽKY -->
+            <section id="srazky">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-percentage"></i> Přehled srážek a dluhů
+                        </h3>
+                        <div class="debt-summary">
+                            <div class="debt-stats">
+                                <div class="debt-stat-item">
+                                    <div class="stat-label">Celkové dluhy:</div>
+                                    <div class="stat-value" id="total-debts">0 Kč</div>
+                                </div>
+                                <div class="debt-stat-item">
+                                    <div class="stat-label">Celkové splátky:</div>
+                                    <div class="stat-value" id="total-payments">0 Kč</div>
+                                </div>
+                                <div class="debt-stat-item">
+                                    <div class="stat-label">Zbývá splatit:</div>
+                                    <div class="stat-value" id="remaining-debt">0 Kč</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="debt-form card">
+                    <h3 class="card-title">
+                        <i class="fas fa-hand-holding-usd"></i> Přidat dluh
+                    </h3>
+                    <form id="debt-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="debt-name">Název dluhu:</label>
+                                <input type="text" id="debt-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-amount">Částka (Kč):</label>
+                                <input type="number" id="debt-amount" class="form-control" min="1" step="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="debt-date">Datum vzniku:</label>
+                                <input type="date" id="debt-date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-due-date">Datum splatnosti:</label>
+                                <input type="date" id="debt-due-date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="debt-priority">Priorita:</label>
+                                <select id="debt-priority" class="form-control">
+                                    <option value="low">Nízká</option>
+                                    <option value="medium" selected>Střední</option>
+                                    <option value="high">Vysoká</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="debt-category">Kategorie:</label>
+                                <select id="debt-category" class="form-control">
+                                    <option value="">-- Vyberte kategorii --</option>
+                                    <!-- Kategorie budou načteny dynamicky -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="debt-note">Poznámka:</label>
+                            <textarea id="debt-note" class="form-control" rows="2" placeholder="Volitelné"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Přidat dluh
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="payment-form card">
+                    <h3 class="card-title">
+                        <i class="fas fa-money-bill-wave"></i> Přidat splátku
+                    </h3>
+                    <form id="payment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-debt">Dluh:</label>
+                                <select id="payment-debt" class="form-control" required>
+                                    <option value="">-- Vyberte dluh --</option>
+                                    <!-- Dluhy budou načteny dynamicky -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-amount">Částka (Kč):</label>
+                                <input type="number" id="payment-amount" class="form-control" min="1" step="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="payment-date">Datum platby:</label>
+                                <input type="date" id="payment-date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-method">Způsob platby:</label>
+                                <select id="payment-method" class="form-control">
+                                    <option value="cash">Hotovost</option>
+                                    <option value="bank">Bankovní převod</option>
+                                    <option value="card">Platební karta</option>
+                                    <option value="other">Jiný</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-note">Poznámka:</label>
+                            <input type="text" id="payment-note" class="form-control" placeholder="Volitelné">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Přidat splátku
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="debts-list">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-list"></i> Seznam dluhů
+                        </h3>
+                        <div id="debts-container">
+                            <!-- Dluhy budou načteny dynamicky -->
+                            <div class="no-data-message">Žádné dluhy k zobrazení</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- PŘEHLEDY -->
+            <section id="prehledy">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar"></i> Statistiky
+                        </h3>
+                        <div class="stats-tabs">
+                            <div class="tabs-header">
+                                <button class="tab-btn active" data-tab="week">Týden</button>
+                                <button class="tab-btn" data-tab="month">Měsíc</button>
+                                <button class="tab-btn" data-tab="year">Rok</button>
+                            </div>
+                            <div class="tabs-content">
+                                <div class="tab-pane active" id="week-tab">
+                                    <h4>Odpracované hodiny (týden)</h4>
+                                    <div class="chart-container">
+                                        <canvas id="weekly-hours-chart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="month-tab">
+                                    <h4>Odpracované hodiny (měsíc)</h4>
+                                    <div class="chart-container">
+                                        <canvas id="monthly-hours-chart"></canvas>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="year-tab">
+                                    <h4>Odpracované hodiny (rok)</h4>
+                                    <div class="chart-container">
+                                        <canvas id="yearly-hours-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-tasks"></i> Rozdělení úkolů
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="tasks-distribution-chart"></canvas>
+                    </div>
+                    <div class="chart-legend" id="tasks-legend">
+                        <!-- Legenda bude vygenerována dynamicky -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-money-bill-alt"></i> Finanční přehled
+                    </h3>
+                    <div class="finance-overview">
+                        <div class="chart-container">
+                            <canvas id="finance-overview-chart"></canvas>
+                        </div>
+                        <div class="finance-summary-stats">
+                            <div class="summary-stat">
+                                <div class="stat-label">Celkový příjem:</div>
+                                <div class="stat-value" id="total-income-value">0 Kč</div>
+                            </div>
+                            <div class="summary-stat">
+                                <div class="stat-label">Celkový výdaj:</div>
+                                <div class="stat-value" id="total-expense-value">0 Kč</div>
+                            </div>
+                            <div class="summary-stat">
+                                <div class="stat-label">Bilance:</div>
+                                <div class="stat-value" id="balance-value">0 Kč</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar-alt"></i> Kalendářní přehled
+                    </h3>
+                    <div class="calendar-view">
+                        <div class="calendar-header">
+                            <button id="prev-month" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h4 id="calendar-title">Duben 2025</h4>
+                            <button id="next-month" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Kalendář bude vygenerován dynamicky -->
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-Rychlé akce
+            <!-- NASTAVENÍ -->
+            <section id="nastaveni">
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-cog"></i> Osobní nastavení
+                    </h3>
+                    <form id="personal-settings-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="settings-person">Osoba:</label>
+                                <select id="settings-person" class="form-control">
+                                    <option value="maru">Maru</option>
+                                    <option value="marty">Marty</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-rate">Hodinová sazba (Kč):</label>
+                                <input type="number" id="settings-rate" class="form-control" min="1" step="1">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Uložit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-list-ul"></i> Správa kategorií
+                    </h3>
+                    <div class="categories-section">
+                        <div class="categories-tabs">
+                            <button class="tab-btn active" data-category-type="tasks">Úkoly</button>
+                            <button class="tab-btn" data-category-type="finance">Finance</button>
+                            <button class="tab-btn" data-category-type="debts">Dluhy</button>
+                        </div>
+                        
+                        <div class="categories-content">
+                            <div class="categories-tab active" id="tasks-categories">
+                                <div class="add-category-form">
+                                    <div class="form-row">
+                                        <div class="form-group flex-grow">
+                                            <input type="text" id="new-task-category" class="form-control" placeholder="Nová kategorie úkolů">
+                                        </div>
+                                        <button id="add-task-category" class="btn btn-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="categories-list" id="task-categories-list">
+                                    <!-- Seznam kategorií úkolů bude načten dynamicky -->
+                                </div>
+                            </div>
+                            
+                            <div class="categories-tab" id="finance-categories">
+                                <div class="add-category-form">
+                                    <div class="form-row">
+                                        <div class="form-group flex-grow">
+                                            <input type="text" id="new-finance-category" class="form-control" placeholder="Nová finanční kategorie">
+                                        </div>
+                                        <div class="form-group">
+                                            <select id="finance-category-type" class="form-control">
+                                                <option value="income">Příjem</option>
+                                                <option value="expense">Výdaj</option>
+                                                <option value="both">Obojí</option>
+                                            </select>
+                                        </div>
+                                        <button id="add-finance-category" class="btn btn-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="categories-list" id="finance-categories-list">
+                                    <!-- Seznam finančních kategorií bude načten dynamicky -->
+                                </div>
+                            </div>
+                            
+                            <div class="categories-tab" id="debt-categories">
+                                <div class="add-category-form">
+                                    <div class="form-row">
+                                        <div class="form-group flex-grow">
+                                            <input type="text" id="new-debt-category" class="form-control" placeholder="Nová kategorie dluhů">
+                                        </div>
+                                        <button id="add-debt-category" class="btn btn-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="categories-list" id="debt-categories-list">
+                                    <!-- Seznam kategorií dluhů bude načten dynamicky -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-database"></i> Správa dat
+                    </h3>
+                    <div class="data-management">
+                        <div class="data-action">
+                            <h4>Export dat</h4>
+                            <p>Stáhněte si zálohu všech vašich dat.</p>
+                            <button id="export-data" class="btn btn-primary">
+                                <i class="fas fa-download"></i> Exportovat data
+                            </button>
+                        </div>
+                        <div class="data-action">
+                            <h4>Import dat</h4>
+                            <p>Nahrajte dříve exportovaná data.</p>
+                            <div class="form-group">
+                                <input type="file" id="import-file" class="form-control-file">
+                            </div>
+                            <button id="import-data" class="btn btn-primary">
+                                <i class="fas fa-upload"></i> Importovat data
+                            </button>
+                        </div>
+                        <div class="data-action">
+                            <h4>Vymazat data</h4>
+                            <p>Odstraní všechna uložená data. Tato akce je nevratná!</p>
+                            <button id="clear-data" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Vymazat všechna data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-palette"></i> Vzhled aplikace
+                    </h3>
+                    <div class="appearance-settings">
+                        <div class="form-group">
+                            <label>Motiv:</label>
+                            <div class="theme-options">
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="auto" checked>
+                                    <span class="theme-label">
+                                        <i class="fas fa-adjust"></i> Automatický
+                                    </span>
+                                </label>
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="light">
+                                    <span class="theme-label">
+                                        <i class="fas fa-sun"></i> Světlý
+                                    </span>
+                                </label>
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="dark">
+                                    <span class="theme-label">
+                                        <i class="fas fa-moon"></i> Tmavý
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Velikost písma:</label>
+                            <div class="font-size-slider">
+                                <input type="range" id="font-size-slider" min="80" max="120" value="100">
+                                <div class="font-size-value">100%</div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button id="save-appearance" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Uložit nastavení
+                            </button>
+                            <button id="reset-appearance" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i> Obnovit výchozí
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fas fa-info-circle"></i> O aplikaci
+                    </h3>
+                    <div class="about-app">
+                        <p><strong>Pracovní výkazy & Finance</strong> verze 2.0</p>
+                        <p>Aplikace pro sledování pracovní doby a správu financí.</p>
+                        <p>© 2025 Martyparty1988</p>
+                        <p>
+                            <a href="https://github.com/Martyparty1988/Makej-2.0" target="_blank">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-Příjem
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Pracovní výkazy & Finance</p>
+            </div>
+        </footer>
 
-Výdaj
-
-Dluh
-
-Splátka
-Přidat příjem/výdaj
-Typ:
-Příjem Výdaj
-Datum:
-Částka (Kč):
-Kategorie:
-                                    -- Vyberte kategorii --
-                                    
-                                
-Popis:
-Uložit
-Nedávné transakce
-Datum
-Typ
-Kategorie
-Popis
-Částka
-Akce
-
-Přehled srážek a dluhů
-Celkové dluhy:
-0 Kč
-Celkové splátky:
-0 Kč
-Zbývá splatit:
-0 Kč
-Přidat dluh
-Název dluhu:
-Částka (Kč):
-Datum vzniku:
-Datum splatnosti:
-Priorita:
-                                    Nízká
-                                    Střední
-                                    Vysoká
-                                
-Kategorie:
-                                    -- Vyberte kategorii --
-                                    
-                                
-Poznámka:
-Přidat dluh
-Přidat splátku
-Dluh:
-                                    -- Vyberte dluh --
-                                    
-                                
-Částka (Kč):
-Datum platby:
-Způsob platby:
-                                    Hotovost
-                                    Bankovní převod
-                                    Platební karta
-                                    Jiný
-                                
-Poznámka:
-Přidat splátku
-Seznam dluhů
-Žádné dluhy k zobrazení
-Statistiky
-Týden Měsíc Rok
-Odpracované hodiny (týden)
-
-Odpracované hodiny (měsíc)
-
-Odpracované hodiny (rok)
-
-Rozdělení úkolů
-
-
-Finanční přehled
-
-Celkový příjem:
-0 Kč
-Celkový výdaj:
-0 Kč
-Bilance:
-0 Kč
-Kalendářní přehled
-Duben 2025
-
-Osobní nastavení
-Osoba:
-                                    Maru
-                                    Marty
-                                
-Hodinová sazba (Kč):
-Uložit
-Správa kategorií
-Úkoly Finance Dluhy
-
-
-
-                                                Příjem
-                                                Výdaj
-                                                Obojí
-                                            
-
-
-
-Správa dat
-Export dat
-Stáhněte si zálohu všech vašich dat.
-Exportovat data
-Import dat
-Nahrajte dříve exportovaná data.
-
-Importovat data
-Vymazat data
-Odstraní všechna uložená data. Tato akce je nevratná!
-Vymazat všechna data
-Vzhled aplikace
-Motiv:
-Automatický Světlý Tmavý
-Velikost písma:
-100%
-Uložit nastavení Obnovit výchozí
-O aplikaci
-Pracovní výkazy & Finance verze 2.0
-Aplikace pro sledování pracovní doby a správu financí.
-© 2025 Martyparty1988
-GitHub
-© 2025 Pracovní výkazy & Finance
+        <script src="app.js"></script>
+        <script src="chart-fixes.js"></script>
+        <script src="navigation-timer-fixes.js"></script>
+        <script src="ui-fixes.js"></script>
+        <script src="finance-manager-component.js"></script>
+        <script src="debt-manager-component.js"></script>
+    </body>
+</html>
