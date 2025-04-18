@@ -63,14 +63,35 @@
         padding: 0.75rem;
     }
     
-    /* Úprava časovače */
+    /* Úprava časovače - opraveno pro iPhone */
     .modern-timer-container {
         flex-direction: column;
         padding: 1rem;
+        max-width: 100%;
+        overflow: hidden;
     }
     
     .timer-display-container {
         width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .timer-display {
+        display: flex;
+        justify-content: center;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .timer-digit {
+        font-size: 2.5rem;
+        width: 2.5rem;
+        height: 3.5rem;
+    }
+    
+    .timer-separator {
+        font-size: 2.5rem;
     }
     
     .timer-controls {
@@ -123,6 +144,17 @@
     .modern-timer-container {
         padding: 0.75rem;
     }
+    
+    /* Menší časovač pro užší displeje */
+    .timer-digit {
+        font-size: 2.2rem;
+        width: 2.2rem;
+        height: 3.2rem;
+    }
+    
+    .timer-separator {
+        font-size: 2.2rem;
+    }
 }
 
 /* Specifické úpravy pro iPhone SE a menší */
@@ -144,6 +176,17 @@
     .btn {
         padding: 0.25rem 0.5rem;
     }
+    
+    /* Ještě menší časovač pro nejužší displeje */
+    .timer-digit {
+        font-size: 2rem;
+        width: 2rem;
+        height: 3rem;
+    }
+    
+    .timer-separator {
+        font-size: 2rem;
+    }
 }
 
 /* Úpravy pro orientaci na šířku */
@@ -164,10 +207,32 @@
         gap: 0.5rem;
     }
     
-    /* Úprava časovače */
+    /* Úprava časovače pro landscape režim */
     .modern-timer-container {
         flex-direction: row;
         padding: 0.5rem;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .timer-display-container {
+        width: 50%;
+        max-width: 50%;
+    }
+    
+    .task-selection {
+        width: 50%;
+        max-width: 50%;
+    }
+    
+    .timer-digit {
+        font-size: 1.8rem;
+        width: 1.8rem;
+        height: 2.8rem;
+    }
+    
+    .timer-separator {
+        font-size: 1.8rem;
     }
 }
 
