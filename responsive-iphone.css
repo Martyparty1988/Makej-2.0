@@ -1,0 +1,214 @@
+/* Responzivní design pro nejnovější iPhony */
+
+/* Základní responzivní nastavení */
+@media screen and (max-width: 428px) { /* iPhone 13 Pro Max šířka */
+    /* Zmenšení fontů */
+    body {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    h3 {
+        font-size: 1.1rem;
+    }
+    
+    /* Úprava hlavičky */
+    .main-header {
+        padding: 0.5rem;
+        flex-direction: column;
+    }
+    
+    .header-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .main-nav {
+        width: 100%;
+        display: none;
+    }
+    
+    .main-nav.show {
+        display: block;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        padding: 0;
+    }
+    
+    .main-nav li {
+        width: 100%;
+    }
+    
+    .main-nav a {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem 0;
+    }
+    
+    /* Úprava karet */
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        padding: 0.75rem;
+    }
+    
+    /* Úprava časovače */
+    .modern-timer-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .timer-display-container {
+        width: 100%;
+    }
+    
+    .timer-controls {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    /* Úprava formulářů */
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .form-group {
+        width: 100%;
+    }
+    
+    /* Úprava tabulek */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    /* Úprava dluhů */
+    .debt-card {
+        padding: 0.5rem;
+    }
+    
+    .debt-info {
+        flex-direction: column;
+    }
+    
+    /* Úprava grafů */
+    .chart-container {
+        height: 200px;
+    }
+}
+
+/* Specifické úpravy pro iPhone 12/13 */
+@media screen and (max-width: 390px) {
+    /* Další zmenšení fontů */
+    body {
+        font-size: 13px;
+    }
+    
+    /* Kompaktnější zobrazení */
+    .card {
+        padding: 0.5rem;
+    }
+    
+    .modern-timer-container {
+        padding: 0.75rem;
+    }
+}
+
+/* Specifické úpravy pro iPhone SE a menší */
+@media screen and (max-width: 375px) {
+    /* Další zmenšení fontů */
+    body {
+        font-size: 12px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    /* Ještě kompaktnější zobrazení */
+    .card {
+        padding: 0.4rem;
+    }
+    
+    .btn {
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Úpravy pro orientaci na šířku */
+@media screen and (max-height: 428px) and (orientation: landscape) {
+    /* Úprava hlavičky */
+    .main-header {
+        padding: 0.3rem;
+    }
+    
+    /* Kompaktnější zobrazení */
+    main {
+        padding: 0.5rem;
+    }
+    
+    /* Úprava karet */
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    /* Úprava časovače */
+    .modern-timer-container {
+        flex-direction: row;
+        padding: 0.5rem;
+    }
+}
+
+/* Podpora pro notch a dynamic island */
+@supports (padding-top: env(safe-area-inset-top)) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* Úpravy pro tmavý režim */
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+        background-color: #121212;
+        color: #f5f5f5;
+    }
+}
+
+/* Opravy pro dotykové ovládání */
+@media (pointer: coarse) {
+    /* Větší cíle pro dotyk */
+    .btn, 
+    input[type="checkbox"],
+    input[type="radio"],
+    select,
+    .dropdown-toggle,
+    .dropdown-item {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Větší mezery mezi interaktivními prvky */
+    .btn + .btn {
+        margin-left: 0.5rem;
+    }
+    
+    /* Lepší scrollování */
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+}
