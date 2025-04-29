@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a6fa5">
+    <title>Marty AI</title>
+    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="images/icon-192x192.png">
+    <link rel="apple-touch-icon" href="images/icon-192x192.png">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/icon-192x192.png" alt="Marty AI Logo">
+                    <h1>Marty AI</h1>
+                </div>
+                <div class="user-menu">
+                    <div class="user-info">
+                        <div class="user-name">Admin</div>
+                        <div class="user-role">Správce</div>
+                    </div>
+                    <div class="user-avatar">A</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Modern Navigation -->
+    <div class="container">
+        <nav class="modern-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" data-tab="dashboard">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span class="nav-text">Přehled</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reservations" class="nav-link" data-tab="reservations">
+                        <i class="fas fa-calendar-alt nav-icon"></i>
+                        <span class="nav-text">Rezervace</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tasks" class="nav-link" data-tab="tasks">
+                        <i class="fas fa-tasks nav-icon"></i>
+                        <span class="nav-text">Úkoly</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#telegram" class="nav-link" data-tab="telegram">
+                        <i class="fab fa-telegram-plane nav-icon"></i>
+                        <span class="nav-text">Telegram</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" data-tab="settings">
+                        <i class="fas fa-cog nav-icon"></i>
+                        <span class="nav-text">Nastavení</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard-tab">
+            <div class="modern-grid">
+                <!-- Summary Tile -->
+                <div class="tile tile-md">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Přehled</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">115</div>
+                                <div class="stat-label">Rezervací</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Aktivních úkolů</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">Vily</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">87%</div>
+                                <div class="stat-label">Obsazenost</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Today's Reservations Tile -->
+                <div class="tile tile-md">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Dnešní rezervace</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="reservation-list" id="today-reservations">
+                            <div class="reservation-item reservation-checkin">
+                                <div class="reservation-icon">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-title">Check-in: Jan Novák</div>
+                                    <div class="reservation-info">Českomalínská, 14:00 - 16:00</div>
+                                </div>
+                                <div class="reservation-villa-indicator ceskomalinska"></div>
+                            </div>
+                            <div class="reservation-item reservation-checkout">
+                                <div class="reservation-icon">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-title">Check-out: Petr Svoboda</div>
+                                    <div class="reservation-info">Podolí, do 11:00</div>
+                                </div>
+                                <div class="reservation-villa-indicator podoli"></div>
+                            </div>
+                            <div class="reservation-item reservation-stay">
+                                <div class="reservation-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-title">Pobyt: Marie Dvořáková</div>
+                                    <div class="reservation-info">Marna, 3. den z 5</div>
+                                </div>
+                                <div class="reservation-villa-indicator marna"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="modern-btn btn-outline btn-sm">Zobrazit všechny</button>
+                    </div>
+                </div>
+                
+                <!-- Českomalínská Tile -->
+                <div class="tile tile-sm tile-ceskomalinska">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Českomalínská</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="villa-stats">
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">45</div>
+                                <div class="villa-stat-label">Rezervací</div>
+                            </div>
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">92%</div>
+                                <div class="villa-stat-label">Obsazenost</div>
+                            </div>
+                        </div>
+                        <div class="villa-status">
+                            <div class="status-label">Stav:</div>
+                            <div class="status-value">Obsazeno</div>
+                        </div>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="modern-btn btn-outline btn-sm">Detaily</button>
+                    </div>
+                </div>
+                
+                <!-- Podolí Tile -->
+                <div class="tile tile-sm tile-podoli">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Podolí</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="villa-stats">
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">35</div>
+                                <div class="villa-stat-label">Rezervací</div>
+                            </div>
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">85%</div>
+                                <div class="villa-stat-label">Obsazenost</div>
+                            </div>
+                        </div>
+                        <div class="villa-status">
+                            <div class="status-label">Stav:</div>
+                            <div class="status-value">Check-out dnes</div>
+                        </div>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="modern-btn btn-outline btn-sm">Detaily</button>
+                    </div>
+                </div>
+                
+                <!-- Marna Tile -->
+                <div class="tile tile-sm tile-marna">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Marna</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="villa-stats">
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">35</div>
+                                <div class="villa-stat-label">Rezervací</div>
+                            </div>
+                            <div class="villa-stat">
+                                <div class="villa-stat-value">78%</div>
+                                <div class="villa-stat-label">Obsazenost</div>
+                            </div>
+                        </div>
+                        <div class="villa-status">
+                            <div class="status-label">Stav:</div>
+                            <div class="status-value">Obsazeno</div>
+                        </div>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="modern-btn btn-outline btn-sm">Detaily</button>
+                    </div>
+                </div>
+                
+                <!-- Pending Tasks Tile -->
+                <div class="tile tile-md">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Aktivní úkoly</h2>
+                        <div class="tile-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="task-list" id="pending-tasks">
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task1" class="modern-form-check-input">
+                                </div>
+                                <div class="task-details">
+                                    <div class="task-title">Úklid po check-outu</div>
+                                    <div class="task-info">Podolí, dnes do 14:00</div>
+                                </div>
+                                <div class="task-villa-indicator podoli"></div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task2" class="modern-form-check-input">
+                                </div>
+                                <div class="task-details">
+                                    <div class="task-title">Příprava na check-in</div>
+                                    <div class="task-info">Českomalínská, dnes do 14:00</div>
+                                </div>
+                                <div class="task-villa-indicator ceskomalinska"></div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-checkbox">
+                                    <input type="checkbox" id="task3" class="modern-form-check-input">
+                                </div>
+                                <div class="task-details">
+                                    <div class="task-title">Výměna ručníků</div>
+                                    <div class="task-info">Marna, zítra</div>
+                                </div>
+                                <div class="task-villa-indicator marna"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="modern-btn btn-outline btn-sm">Zobrazit všechny</button>
+                    </div>
+                </div>
+                
+                <!-- Telegram Bot Tile -->
+                <div class="tile tile-md telegram-tile">
+                    <div class="tile-header">
+                        <h2 class="tile-title">Telegram Bot</h2>
+                        <div class="tile-icon">
+                            <i class="fab fa-telegram-plane"></i>
+                        </div>
+                    </div>
+                    <div class="tile-content">
+                        <div class="telegram-messages">
+                            <div class="telegram-message">
+                                <div class="telegram-message-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="telegram-message-content">
+                                    <div class="telegram-message-name">Jana Nováková</div>
+                                    <div class="telegram-message-text">V Marně chybí toaletní papír</div>
+                                    <div class="telegram-message-time">Dnes, 10:23</div>
+                                </div>
+                            </div>
+                            <div class="telegram-message">
+                                <div class="telegram-message-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="telegram-message-content">
+                                    <div class="telegram-message-name">MartyBot</div>
+                                    <div class="telegram-message-text">Vytvořil jsem úkol: Doplnit toaletní papír v Marně</div>
+                                    <div class="telegram-message-time">Dnes, 10:24</div>
+   
+(Content truncated due to size limit. Use line ranges to read in chunks)
